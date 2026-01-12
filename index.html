@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jessie Math - 分數大挑戰</title>
+
+  <!-- ✅ 快取連結預覽（你指定的兩行） -->
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+
+  <!-- 控制預覽卡片那行文字（很多平台會抓這個） -->
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <!-- LINE / FB 常抓這個（預覽卡片的描述文字） -->
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+
+  <!-- ✅ 快取連結預覽（請放在 <head> 裡） -->
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <!-- ✅ LINE / FB 預覽用 -->
+  <meta property="og:title" content="Jessie Math - 分數大挑戰">
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:type" content="website">
+
+  <!-- ✅ 預覽圖片（把檔名換成你的主題圖，例如 g5-u7-1.png） -->
+  <meta property="og:image" content="g5-u7-1.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1536">
+  <meta property="og:image:alt" content="Jessie Math 遊戲封面">
+
+  <!-- ✅ 有些平台會參考 -->
+  <link rel="image_src" href="g5-u7-1.png">
+
+  <!-- ✅ Twitter / X（可用同一張圖） -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jessie Math - 分數大挑戰">
+  <meta name="twitter:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta name="twitter:image" content="g5-u7-1.png">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f4f4f9;
+      --card:#ffffff;
+
+      --primary:#FFD700;
+      --good:#16a34a;
+      --bad:#dc2626;
+
+      --shadow:0 10px 30px rgba(2,8,23,.08);
+      --radius:18px;
+      --safe:16px;
+
+      --pill-bg:#ffffff;
+      --pill-line:#dbe4ff;
+      --pill-ink:#1f2937;
+
+      --footer-bg:#ffffff;
+      --footer-line:#e5e7eb;
+      --footer-ink:#0f172a;
+      --footer-muted:#475569;
+      --footer-shadow:0 10px 30px rgba(2,8,23,.08);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Arial, "Microsoft JhengHei", system-ui, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    /* ===================== HERO / HEADER（品牌一致） ===================== */
+    .header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      box-shadow: 0 6px 18px rgba(2,8,23,.06);
+    }
+    .header-inner{
+      max-width: 1100px;
+      margin:0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .brand-avatar{
+      width:54px;
+      height:54px;
+      border-radius:999px;
+      border:4px solid #f5a400;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:transparent;
+      flex:0 0 auto;
+    }
+    .brand-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:transparent;
+    }
+    .brand-title{
+      font-weight:900;
+      font-size:32px;
+      letter-spacing: .2px;
+      line-height:1;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid var(--pill-line);
+      background:var(--pill-bg);
+      color:var(--pill-ink);
+      text-decoration:none;
+      font-weight:800;
+      box-shadow: 0 6px 14px rgba(2,8,23,.05);
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .pill i{ font-size:16px; opacity:.9; }
+    .pill:hover{ transform: translateY(-1px); filter: brightness(.99); }
+    .pill-back{
+      border:2px solid #7c5cff;
+      color:#4c2cff;
+    }
+    .pill-back i{ color:#4c2cff; }
+
+    @media (max-width:720px){
+      .brand-title{ font-size:26px; }
+      .brand-left{ min-width:auto; }
+      .header-inner{ padding:12px 14px; }
+    }
+
+    /* ===================== MAIN ===================== */
+    .game-container{
+      max-width: 860px;
+      margin: 18px auto 28px;
+      padding: var(--safe);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border:1px solid var(--line);
+    }
+
+    .screen{ display:none; padding:18px; }
+    .screen.active{ display:block; }
+
+    .center{ text-align:center; }
+    h2{ margin:6px 0 10px; }
+    p{ margin:10px 0; line-height:1.7; }
+
+    .btn-primary{
+      background: var(--primary);
+      border:0;
+      padding:10px 18px;
+      margin:10px 6px;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:900;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn-primary:hover{ transform: translateY(-1px); filter: brightness(.98); }
+
+    .input-like{
+      width:min(340px, 92%);
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+      outline:none;
+      font-size:1rem;
+    }
+    .input-like:focus{ border-color:#cbd5e1; box-shadow:0 0 0 4px rgba(95,115,255,.18); }
+
+    /* ✅ 分數顯示：分子在上 / 分母在下 */
+    .frac{
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      vertical-align:middle;
+      line-height:1;
+      font-weight:900;
+      margin: 0 .08em;
+      transform: translateY(-1px);
+    }
+    .frac .top{
+      font-size:.95em;
+      padding: 0 .22em .18em;
+    }
+    .frac .bottom{
+      font-size:.95em;
+      border-top:2px solid rgba(15,23,42,.45);
+      padding: .18em .22em 0;
+    }
+    .frac.sm{ font-size:1em; }
+    .frac.md{ font-size:1.05em; }
+    .frac.lg{ font-size:1.1em; }
+    @media (max-width:520px){
+      .frac .bottom{ border-top-width:1.5px; }
+    }
+
+    /* ✅ 說明區改左對齊卡片 */
+    .rule-card{
+      max-width: 720px;
+      margin: 12px auto 0;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      background:#f8fafc;
+      text-align:left;
+    }
+    .rule-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
+    .rule-item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border:1px solid rgba(15,23,42,.06);
+      border-radius:14px;
+      background:#fff;
+    }
+    .rule-item i{
+      margin-top:2px;
+      width:18px;
+      text-align:center;
+      opacity:.9;
+    }
+    .rule-item .k{ font-weight:1000; }
+    .tiny{ color:var(--muted); font-size:.95rem; }
+
+    /* ✅ 關卡排版：上3下2（桌機/平板） */
+    .level-selection-5{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+    .level-selection-5 .level-btn:nth-child(4){
+      grid-column: 1 / span 2;
+    }
+    .level-selection-5 .level-btn:nth-child(5){
+      grid-column: 3 / span 1;
+    }
+    @media (max-width: 620px){
+      .level-selection-5{ grid-template-columns: 1fr; }
+      .level-selection-5 .level-btn:nth-child(4),
+      .level-selection-5 .level-btn:nth-child(5){ grid-column:auto; }
+    }
+
+    .level-btn{
+      padding:18px 12px;
+      border:2px solid var(--primary);
+      background:#fff;
+      border-radius:16px;
+      font-size:1.05rem;
+      cursor:pointer;
+      font-weight:900;
+      transition: transform .12s ease, background .12s ease;
+      text-align:center;
+    }
+    .level-btn:hover{ transform: translateY(-2px); background:#fffbe6; }
+
+    .game-controls{
+      display:flex;
+      justify-content:space-around;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      text-align:center;
+    }
+    .game-stat{
+      font-size:1.05rem;
+      font-weight:900;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:16px;
+      min-width:160px;
+    }
+
+    .question-box{
+      font-size:1.8rem;
+      margin:16px 0 10px;
+      padding:18px;
+      border:2px dashed #cbd5e1;
+      border-radius:16px;
+      background:#fff;
+      text-align:center;
+    }
+
+    /* ✅ 對錯回饋 */
+    .feedback{
+      max-width: 560px;
+      margin: 10px auto 2px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      display:none;
+      text-align:left;
+      line-height:1.6;
+    }
+    .feedback.show{ display:block; }
+    .feedback .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:1000;
+      letter-spacing:.2px;
+    }
+    .feedback.good{ border-color: rgba(22,163,74,.35); background: rgba(22,163,74,.08); }
+    .feedback.bad{ border-color: rgba(220,38,38,.35); background: rgba(220,38,38,.08); }
+    .feedback .tag i{ font-size:16px; }
+    .feedback .ans{ margin-top:6px; color: var(--muted); font-weight:900; }
+
+    .answer-options{ max-width:560px; margin: 0 auto; }
+    .answer-options button{
+      width:100%;
+      margin:8px 0;
+      padding:14px;
+      font-size:1.1rem;
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+      text-align:left;
+    }
+    .answer-options button:hover{ transform: translateY(-1px); filter: brightness(.99); }
+    .answer-options button:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
+
+    .answer-options button.correct-glow{
+      border-color: rgba(22,163,74,.55);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.12);
+      background: rgba(22,163,74,.06);
+    }
+
+    .divider{ margin:16px 0; border:0; border-top:1px solid var(--line); }
+
+    .pause-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.72);
+      color:#fff;
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+      flex-direction:column;
+      gap:10px;
+      padding:20px;
+      text-align:center;
+    }
+
+    table{ width:100%; border-collapse:collapse; }
+    th,td{ border-bottom:1px solid var(--line); padding:10px 8px; text-align:center; }
+    th{ background:#fffbe6; }
+
+    /* ===================== ✅ FOOTER（你指定新增） ===================== */
+    footer{
+      max-width: 1100px;
+      margin: 0 auto 24px;
+      padding: 0 16px 18px;
+    }
+    .footer-pill{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      padding: 14px 16px;
+      background: var(--footer-bg);
+      border: 1px solid var(--footer-line);
+      border-radius: 999px;
+      box-shadow: var(--footer-shadow);
+    }
+    .footer-left, .footer-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .footer-dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255,215,0,.18);
+    }
+    .footer-copy{
+      font-weight:900;
+      color: var(--footer-ink);
+      letter-spacing:.2px;
+    }
+    .footer-icon{
+      width:28px;
+      height:28px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      background: rgba(124,92,255,.10);
+      border: 1px solid rgba(124,92,255,.18);
+      color:#4c2cff;
+    }
+    .footer-tagline{
+      font-weight:900;
+      color: var(--footer-muted);
+      letter-spacing:.2px;
+    }
+    @media (max-width:720px){
+      .footer-pill{ border-radius: 22px; }
+      .footer-copy{ font-size:.95rem; }
+      .footer-tagline{ font-size:.95rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HERO -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand-left">
+        <div class="brand-avatar">
+          <img src="JESSIEMATH-Q.png" alt="Jessie Math" onerror="this.style.display='none'">
+        </div>
+        <div class="brand-title">Jessie Math</div>
+      </div>
+
+      <nav class="nav-right" aria-label="top-nav">
+        <a class="pill" href="https://jessiemath0703-chu.github.io/website2/" title="首頁">
+          <i class="fa-solid fa-house"></i> 首頁
+        </a>
+        <a class="pill" href="https://jessiemath0703-chu.github.io/Game-Lobby/" title="遊戲大廳">
+          <i class="fa-solid fa-desktop"></i> 遊戲大廳
+        </a>
+        <!-- 這個 href 先隨便填，實際會在 JS 裡被 BACK_URL 蓋掉 -->
+        <a id="backBtn" class="pill pill-back" href="#" title="五年級">
+          <i class="fa-solid fa-chevron-left"></i> 五年級擴分約分與加減
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="game-container">
+    <!-- Welcome -->
+    <div id="welcomeScreen" class="screen active center">
+      <h2>分數大挑戰：探險家報到！</h2>
+      <p class="tiny">名字輸入下去，你就是這個世界的主角✨</p>
+      <input type="text" id="playerName" class="input-like" placeholder="探險家名字" autocomplete="off">
+      <div>
+        <button class="btn-primary" type="button" onclick="showExplanation()">開始遊戲</button>
+      </div>
+    </div>
+
+    <!-- Explanation -->
+    <div id="explanationScreen" class="screen">
+      <div class="center">
+        <h2>遊戲規則說明 📜</h2>
+        <p class="tiny">看清楚，就可闖關啦</p>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-grid">
+          <div class="rule-item">
+            <i class="fa-solid fa-flag-checkered"></i>
+            <div><span class="k">主題：</span>五年級分數的擴分、約分與加減</div>
+          </div>
+          <div class="rule-item">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <div><span class="k">時間：</span>每回合 60 秒</div>
+          </div>
+          <div class="rule-item">
+            <i class="fa-solid fa-star"></i>
+            <div><span class="k">計分：</span>答對 100 分；連續答對 Combo 會疊上去（上限 x3.0）</div>
+          </div>
+          <div class="rule-item">
+            <i class="fa-solid fa-bolt"></i>
+            <div><span class="k">時間獎懲：</span>答對 +5 秒、答錯 -5 秒</div>
+          </div>
+          <div class="rule-item">
+            <i class="fa-solid fa-trophy"></i>
+            <div><span class="k">目標：</span>把星等 ★★★ 拿到手軟</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center">
+        <button class="btn-primary" type="button" onclick="showLevelSelect()">我明白了，選擇關卡！</button>
+      </div>
+    </div>
+
+    <!-- Level Select -->
+    <div id="levelSelectScreen" class="screen">
+      <div class="center">
+        <h2>選擇你的挑戰關卡 🗺️</h2>
+        <p class="tiny">五關一路闖：從擴分到綜合，把分數練到又快又穩。</p>
+      </div>
+
+      <div class="level-selection-5">
+        <button class="level-btn" type="button" onclick="showDifficultySelect(1)">第 1 關：分數擴分</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(2)">第 2 關：分數約分</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(3)">第 3 關：同分母加減</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(4)">第 4 關：異分母加減</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(5)">第 5 關：綜合挑戰</button>
+      </div>
+
+      <div class="center">
+        <button class="btn-primary" type="button" style="margin-top:18px;" onclick="showRanking()">🏆 排行榜</button>
+      </div>
+    </div>
+
+    <!-- Difficulty -->
+    <div id="difficultySelectScreen" class="screen center">
+      <h2 id="currentLevelTitle"></h2>
+      <p class="tiny">選難度像選節奏：慢是優雅，快是燃 🔥</p>
+      <button class="btn-primary" type="button" onclick="startGame('easy')">簡單（較慢）</button>
+      <button class="btn-primary" type="button" onclick="startGame('normal')">普通（標準）</button>
+      <button class="btn-primary" type="button" onclick="startGame('hard')">困難（超快）</button>
+      <div>
+        <button class="btn-primary" type="button" onclick="showLevelSelect()">返回</button>
+      </div>
+    </div>
+
+    <!-- Game -->
+    <div id="gameScreen" class="screen">
+      <div class="game-controls">
+        <span class="game-stat">時間：<span id="timer">60</span>s</span>
+        <span class="game-stat">分數：<span id="score">0</span></span>
+        <span class="game-stat">Combo：x<span id="combo">1.0</span></span>
+      </div>
+
+      <div class="question-box">
+        <div id="questionText">準備出題中…</div>
+      </div>
+
+      <div id="feedbackBox" class="feedback">
+        <div class="tag" id="feedbackTag"></div>
+        <div class="ans" id="feedbackAns"></div>
+      </div>
+
+      <div class="answer-options">
+        <button id="optionA" type="button" onclick="checkAnswer('A')">A</button>
+        <button id="optionB" type="button" onclick="checkAnswer('B')">B</button>
+        <button id="optionC" type="button" onclick="checkAnswer('C')">C</button>
+      </div>
+
+      <hr class="divider">
+
+      <div class="center">
+        <button class="btn-primary" type="button" onclick="pauseGame()"><i class="fa-solid fa-pause"></i> 暫停</button>
+        <button class="btn-primary" type="button" onclick="restartGame()"><i class="fa-solid fa-rotate-right"></i> 重新開始</button>
+        <button class="btn-primary" type="button" onclick="quitGame()"><i class="fa-solid fa-right-from-bracket"></i> 回關卡主選單</button>
+      </div>
+    </div>
+
+    <!-- Ranking -->
+    <div id="rankingScreen" class="screen">
+      <div class="center">
+        <h2>🏆 全球探險家排行榜</h2>
+      </div>
+      <table>
+        <thead>
+          <tr><th>名次</th><th>探險家</th><th>分數</th><th>星等</th></tr>
+        </thead>
+        <tbody id="rankingTableBody">
+          <tr><td>1</td><td>Jessie</td><td>1500</td><td>★★★</td></tr>
+        </tbody>
+      </table>
+      <div class="center">
+        <button class="btn-primary" type="button" onclick="showLevelSelect()">返回關卡選擇</button>
+      </div>
+    </div>
+
+    <!-- Pause Overlay -->
+    <div id="pauseOverlay" class="pause-overlay" role="dialog" aria-modal="true">
+      <h1>遊戲已暫停</h1>
+      <button class="btn-primary" type="button" onclick="resumeGame()"><i class="fa-solid fa-play"></i> 繼續遊戲</button>
+    </div>
+  </div>
+
+  <!-- ✅ 你指定新增的 Footer（原樣放入） -->
+  <footer>
+    <div class="footer-pill">
+      <div class="footer-left">
+        <div class="footer-dot" aria-hidden="true"></div>
+        <div class="footer-copy">© 2025–2026 Jessie Math 捷析老師. All rights reserved.</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-icon" aria-hidden="true"><i class="fas fa-compass"></i></div>
+        <div class="footer-tagline">數學不迷路，Jessie 帶你走向理解。</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ========== 幾年級主題（可改） ========== */
+    const BACK_GRADE = "五年級";
+    const BACK_TOPIC  = "擴分約分與加減";
+    /* 🔁 這裡直接帶錨點 #g5-u7 */
+    const BACK_URL = "https://jessiemath0703-chu.github.io/Game-Lobby/#g5-u7";
+
+    /* ========== GAME STATE ========== */
+    let currentPlayerName = "";
+    let currentLevel = 0;
+    let currentDifficulty = "";
+    let timerInterval = null;
+    let gameTime = 60;
+    let currentScore = 0;
+    let comboMultiplier = 1.0;
+    let isPaused = false;
+
+    const levelNames = ["", "分數擴分", "分數約分", "同分母加減", "異分母加減", "綜合挑戰"];
+
+    const feedbackBox = () => document.getElementById("feedbackBox");
+    const feedbackTag = () => document.getElementById("feedbackTag");
+    const feedbackAns = () => document.getElementById("feedbackAns");
+
+    function showScreen(screenId){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      const el = document.getElementById(screenId);
+      if (el) el.classList.add("active");
+    }
+
+    function showExplanation(){
+      const nameInput = document.getElementById("playerName").value.trim();
+      if(!nameInput) return alert("請輸入您的名字！");
+      currentPlayerName = nameInput;
+      showScreen("explanationScreen");
+    }
+    function showLevelSelect(){ showScreen("levelSelectScreen"); }
+
+    function showDifficultySelect(level){
+      currentLevel = level;
+      document.getElementById("currentLevelTitle").textContent = `第 ${level} 關：${levelNames[level]}`;
+      showScreen("difficultySelectScreen");
+    }
+
+    function updateStats(){
+      document.getElementById("timer").textContent = gameTime;
+      document.getElementById("score").textContent = currentScore;
+      document.getElementById("combo").textContent = comboMultiplier.toFixed(1);
+    }
+
+    function startTimer(){
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if(isPaused) return;
+        gameTime--;
+        if(gameTime <= 0){
+          gameTime = 0;
+          updateStats();
+          endGame();
+          return;
+        }
+        updateStats();
+      }, 1000);
+    }
+
+    /* ✅ 分數 HTML：分子在上 / 分母在下 */
+    function fracHTML(n,d,size="md"){
+      return `<span class="frac ${size}" aria-label="${n} 分之 ${d}"><span class="top">${n}</span><span class="bottom">${d}</span></span>`;
+    }
+    function fracKey(n,d){ return `${n}/${d}`; }
+
+    /* ✅ 帶分數顯示（題目用）：例如 1 又 7/12 */
+    function mixedHTML(n,d,size="md"){
+      const sign = n < 0 ? "-" : "";
+      n = Math.abs(n);
+      if(n < d) return `${sign}${fracHTML(n,d,size)}`;
+      const whole = Math.floor(n/d);
+      const rem = n % d;
+      if(rem === 0) return `${sign}${whole}`;
+      return `${sign}<strong>${whole}</strong> 又 ${fracHTML(rem,d,size)}`;
+    }
+
+    /* ========== 小工具：最大公因數 / 最小公倍數 / 約分 ========== */
+    function gcd(a,b){
+      a = Math.abs(a); b = Math.abs(b);
+      while(b){ [a,b] = [b, a%b]; }
+      return a || 1;
+    }
+    function lcm(a,b){
+      return Math.abs(a*b) / gcd(a,b);
+    }
+    function reduceFrac(n,d){
+      const g = gcd(n,d);
+      return { n: n/g, d: d/g };
+    }
+
+    /* ========== 題目生成（每關都動態變化｜更豐富、多元） ========== */
+    let correctKey = "A";
+    let correctFrac = {n:1,d:2};
+    let currentQuestionHTML = "";
+
+    function randInt(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function uniqueByKey(fracs){
+      const seen = new Set();
+      const out = [];
+      for(const f of fracs){
+        const k = fracKey(f.n,f.d);
+        if(!seen.has(k)){
+          seen.add(k);
+          out.push(f);
+        }
+      }
+      return out;
+    }
+
+    function shuffle(arr){
+      for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function clearOptionGlow(){
+      ["A","B","C"].forEach(k => document.getElementById("option"+k).classList.remove("correct-glow"));
+    }
+    function setOptionsDisabled(disabled){
+      ["A","B","C"].forEach(k => document.getElementById("option"+k).disabled = disabled);
+    }
+
+    function showFeedback(isCorrect){
+      const box = feedbackBox();
+      box.classList.remove("good","bad");
+      box.classList.add("show", isCorrect ? "good" : "bad");
+
+      if(isCorrect){
+        feedbackTag().innerHTML = `<i class="fa-solid fa-circle-check"></i> 答對！你的腦袋在發光`;
+        feedbackAns().innerHTML = "";
+      }else{
+        feedbackTag().innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 答錯了，但答案我幫你抓回來了`;
+        feedbackAns().innerHTML = `正確答案：${correctKey}（${fracHTML(correctFrac.n, correctFrac.d, "sm")}）`;
+      }
+    }
+
+    function hideFeedback(){
+      feedbackBox().classList.remove("show","good","bad");
+      feedbackTag().textContent = "";
+      feedbackAns().textContent = "";
+    }
+
+    /* =========================================================
+       ✅ 核心：選項生成（維持你原本邏輯）
+       ========================================================= */
+    function makeDistractorsReduced(cn, cd){
+      const list = [];
+      list.push(reduceFrac(Math.max(1, cn-1), cd));
+      list.push(reduceFrac(cn+1, cd));
+      list.push(reduceFrac(cn, Math.max(2, cd-1)));
+      list.push(reduceFrac(cn, cd+1));
+      const k = randInt(2,4);
+      list.push(reduceFrac(cn* k, cd* k));
+      list.push(reduceFrac(cn*randInt(2,4), cd));
+      list.push(reduceFrac(cn, cd*randInt(2,4)));
+      return list;
+    }
+
+    function buildOptionsGeneric(correct, opts = {}){
+      const {
+        reduceCorrect = true,
+        reduceDistractors = true,
+        distractorList = null
+      } = opts;
+
+      const correctForm = reduceCorrect ? reduceFrac(correct.n, correct.d) : { n: correct.n, d: correct.d };
+      const correctK = fracKey(correctForm.n, correctForm.d);
+
+      let distract = [];
+
+      if(Array.isArray(distractorList) && distractorList.length){
+        distract = distractorList.map(f => reduceDistractors ? reduceFrac(f.n, f.d) : { n:f.n, d:f.d });
+      }else{
+        const base = makeDistractorsReduced(correctForm.n, correctForm.d);
+        distract = base.map(f => reduceDistractors ? reduceFrac(f.n, f.d) : { n:f.n, d:f.d });
+      }
+
+      distract = uniqueByKey(distract).filter(f => fracKey(f.n,f.d) !== correctK);
+
+      while(distract.length < 2){
+        const extra = reduceDistractors
+          ? reduceFrac(correctForm.n + randInt(1,3), correctForm.d + randInt(1,3))
+          : { n: correctForm.n + randInt(1,3), d: correctForm.d + randInt(1,3) };
+        distract.push(extra);
+        distract = uniqueByKey(distract).filter(f => fracKey(f.n,f.d) !== correctK);
+      }
+
+      const picks = shuffle([correctForm, distract[0], distract[1]]);
+      const keys = ["A","B","C"];
+      const map = {};
+      picks.forEach((f,i) => map[keys[i]] = f);
+
+      correctKey = keys[picks.findIndex(f => fracKey(f.n,f.d) === correctK)];
+      correctFrac = correctForm;
+
+      return map;
+    }
+
+    // Level 1（維持你原本修正後版本：略）
+    function buildOptionsForFixedDenom(baseN, baseD, targetD){
+      const m = targetD / baseD;
+      const correct = { n: baseN * m, d: targetD };
+
+      const wrongs = [];
+      wrongs.push({ n: baseN, d: targetD });
+      wrongs.push({ n: baseN * (m + 1), d: targetD });
+      wrongs.push({ n: Math.max(1, baseN * m - 1), d: targetD });
+      wrongs.push({ n: baseN * m + 1, d: targetD });
+      wrongs.push({ n: baseN * (m === 2 ? 3 : 2), d: targetD });
+      wrongs.push({ n: baseN * m, d: baseD });
+
+      const correctK = fracKey(correct.n, correct.d);
+      let distractors = uniqueByKey(wrongs).filter(f => fracKey(f.n,f.d) !== correctK);
+
+      while(distractors.length < 2){
+        distractors.push({ n: baseN * m + randInt(2,4), d: targetD });
+        distractors = uniqueByKey(distractors).filter(f => fracKey(f.n,f.d) !== correctK);
+      }
+
+      return buildOptionsGeneric(
+        correct,
+        { reduceCorrect:false, reduceDistractors:false, distractorList:distractors }
+      );
+    }
+
+    function buildOptionsForFixedNumer(baseN, baseD, targetN){
+      const m = targetN / baseN;
+      const correct = { n: targetN, d: baseD * m };
+
+      const wrongs = [];
+      wrongs.push({ n: targetN, d: baseD });
+      wrongs.push({ n: targetN, d: baseD * (m + 1) });
+      wrongs.push({ n: targetN, d: Math.max(2, baseD * m - 1)});
+      wrongs.push({ n: targetN, d: baseD * m + 1 });
+      wrongs.push({ n: baseN, d: baseD * m });
+      wrongs.push({ n: targetN, d: baseD * (m === 2 ? 3 : 2)});
+
+      const correctK = fracKey(correct.n, correct.d);
+      let distractors = uniqueByKey(wrongs).filter(f => fracKey(f.n,f.d) !== correctK);
+
+      while(distractors.length < 2){
+        distractors.push({ n: targetN, d: baseD * m + randInt(2,4) });
+        distractors = uniqueByKey(distractors).filter(f => fracKey(f.n,f.d) !== correctK);
+      }
+
+      return buildOptionsGeneric(
+        correct,
+        { reduceCorrect:false, reduceDistractors:false, distractorList:distractors }
+      );
+    }
+
+    /* ===================== 題型庫 ===================== */
+
+    function genLevel1(){
+      let b = randInt(2,9);
+      let a = randInt(1,b-1);
+      const r = reduceFrac(a,b); a=r.n; b=r.d;
+
+      const style = randInt(1,3);
+
+      if(style === 1){
+        const m = randInt(2,7);
+        const targetD = b*m;
+        currentQuestionHTML = `把 ${fracHTML(a,b,"lg")} 擴分成分母 <strong>${targetD}</strong> 的等值分數是？`;
+        return buildOptionsForFixedDenom(a,b,targetD);
+      }
+
+      if(style === 2){
+        const m = randInt(2,7);
+        const targetN = a*m;
+        const targetD = b*m;
+        currentQuestionHTML = `擴分填空：${fracHTML(a,b,"lg")} = <strong>?</strong>（分母要是 <strong>${targetD}</strong>）`;
+        return buildOptionsGeneric(
+          { n: targetN, d: targetD },
+          {
+            reduceCorrect:false,
+            reduceDistractors:false,
+            distractorList: [
+              { n: a, d: targetD },
+              { n: targetN + 1, d: targetD },
+              { n: Math.max(1,targetN-1), d: targetD },
+              { n: targetN, d: b },
+              { n: targetN, d: targetD + 1 }
+            ]
+          }
+        );
+      }
+
+      const m = randInt(2,7);
+      const targetN = a*m;
+      currentQuestionHTML = `把 ${fracHTML(a,b,"lg")} 擴分成分子 <strong>${targetN}</strong> 的等值分數是？`;
+      return buildOptionsForFixedNumer(a,b,targetN);
+    }
+
+    function genLevel2(){
+      let q = randInt(2,12);
+      let p = randInt(1,q-1);
+      let r = reduceFrac(p,q); p=r.n; q=r.d;
+
+      const k = randInt(2,9);
+      const nn = p*k, dd = q*k;
+
+      const style = randInt(1,3);
+
+      if(style === 1){
+        currentQuestionHTML = `把 ${fracHTML(nn,dd,"lg")} 約分後是？`;
+        return buildOptionsGeneric({ n: p, d: q }, { reduceCorrect:true, reduceDistractors:true });
+      }
+
+      if(style === 2){
+        currentQuestionHTML = `最簡分數挑戰：${fracHTML(nn,dd,"lg")} 的最簡分數是？（不要被「看起來很像」騙到😼）`;
+        return buildOptionsGeneric({ n: p, d: q }, { reduceCorrect:true, reduceDistractors:true });
+      }
+
+      currentQuestionHTML = `填空：${fracHTML(nn,dd,"lg")} = <strong>?</strong>（選出正確最簡分數）`;
+      return buildOptionsGeneric({ n: p, d: q }, { reduceCorrect:true, reduceDistractors:true });
+    }
+
+    function genLevel3(){
+      const d = randInt(4,18);
+      let a = randInt(1,d-1);
+      let b = randInt(1,d-1);
+      const isAdd = Math.random() < 0.58;
+
+      let n;
+      if(isAdd){
+        n = a + b;
+        if(n > d*3){
+          b = randInt(1, Math.max(1, d-1));
+          n = a + b;
+        }
+        currentQuestionHTML = `同分母：${fracHTML(a,d,"lg")} + ${fracHTML(b,d,"lg")} = ? <span class="tiny">（答案以最簡分數呈現）</span>`;
+      }else{
+        if(a < b) [a,b] = [b,a];
+        n = a - b;
+        currentQuestionHTML = `同分母：${fracHTML(a,d,"lg")} − ${fracHTML(b,d,"lg")} = ?`;
+      }
+
+      const reduced = reduceFrac(n,d);
+      return buildOptionsGeneric(reduced, { reduceCorrect:true, reduceDistractors:true });
+    }
+
+    function genLevel4(){
+      const style = randInt(1,3);
+
+      if(style !== 3){
+        let d1 = randInt(4,12);
+        let d2 = randInt(4,12);
+        while(d2 === d1) d2 = randInt(4,12);
+
+        let n1 = randInt(1,d1-1);
+        let n2 = randInt(1,d2-1);
+
+        const isAdd = Math.random() < 0.6;
+        const L = lcm(d1,d2);
+
+        const A = n1 * (L/d1);
+        const B = n2 * (L/d2);
+
+        if(isAdd){
+          const num = A + B;
+          currentQuestionHTML = `異分母：${fracHTML(n1,d1,"lg")} + ${fracHTML(n2,d2,"lg")} = ?`;
+          return buildOptionsGeneric(reduceFrac(num, L), { reduceCorrect:true, reduceDistractors:true });
+        }else{
+          if(A < B){
+            [n1,n2] = [n2,n1];
+            [d1,d2] = [d2,d1];
+            const L2 = lcm(d1,d2);
+            const A2 = n1 * (L2/d1);
+            const B2 = n2 * (L2/d2);
+            const num2 = A2 - B2;
+            currentQuestionHTML = `異分母：${fracHTML(n1,d1,"lg")} − ${fracHTML(n2,d2,"lg")} = ?`;
+            return buildOptionsGeneric(reduceFrac(num2, L2), { reduceCorrect:true, reduceDistractors:true });
+          }
+          const num = A - B;
+          currentQuestionHTML = `異分母：${fracHTML(n1,d1,"lg")} − ${fracHTML(n2,d2,"lg")} = ?`;
+          return buildOptionsGeneric(reduceFrac(num, L), { reduceCorrect:true, reduceDistractors:true });
+        }
+      }
+
+      /* =========================================================
+         ✅ 這裡就是你說的問題：比大小題，選項必須包含題目那兩個分數
+         修正內容：選項 = {較大分數, 較小分數, 1 個干擾}
+         其他不動
+         ========================================================= */
+      let d1 = randInt(4,15);
+      let d2 = randInt(4,15);
+      while(d2 === d1) d2 = randInt(4,15);
+
+      let n1 = randInt(1,d1-1);
+      let n2 = randInt(1,d2-1);
+
+      const f1 = reduceFrac(n1,d1);
+      const f2 = reduceFrac(n2,d2);
+
+      const L = lcm(f1.d, f2.d);
+      const v1 = f1.n * (L / f1.d);
+      const v2 = f2.n * (L / f2.d);
+
+      const bigger = (v1 >= v2) ? f1 : f2;
+      const smaller = (v1 >= v2) ? f2 : f1;
+
+      // 做一個不等於 bigger / smaller 的干擾
+      let decoy = reduceFrac(randInt(1,9), randInt(2,12));
+      const bk = fracKey(bigger.n,bigger.d);
+      const sk = fracKey(smaller.n,smaller.d);
+      while(fracKey(decoy.n,decoy.d) === bk || fracKey(decoy.n,decoy.d) === sk){
+        decoy = reduceFrac(randInt(1,9), randInt(2,12));
+      }
+
+      currentQuestionHTML =
+        `比大小：下面兩個分數誰比較大？<br>` +
+        `<strong>${fracHTML(f1.n,f1.d,"lg")}</strong> 與 <strong>${fracHTML(f2.n,f2.d,"lg")}</strong>（選出較大的分數）`;
+
+      return buildOptionsGeneric(
+        bigger,
+        { reduceCorrect:true, reduceDistractors:true, distractorList:[smaller, decoy] }
+      );
+    }
+
+    function genLevel5(){
+      const style = randInt(1,5);
+
+      if(style === 1) return genLevel1();
+      if(style === 2) return genLevel2();
+      if(style === 3) return genLevel3();
+      if(style === 4) return genLevel4();
+
+      const scenario = randInt(1,4);
+
+      if(scenario === 1){
+        const aN=3, aD=8, bN=2, bD=9;
+        const L = lcm(aD,bD);
+        const diff = aN*(L/aD) - bN*(L/bD);
+        currentQuestionHTML = `應用題：有一條蛋糕，哥哥吃了 ${fracHTML(aN,aD,"lg")} 條，弟弟吃了 ${fracHTML(bN,bD,"lg")} 條。哥哥比弟弟多吃了幾條？`;
+        return buildOptionsGeneric(reduceFrac(diff, L), { reduceCorrect:true, reduceDistractors:true });
+      }
+
+      if(scenario === 2){
+        const whole = 1;
+        const n=5, d=14;
+        const totalN = whole*d + n;
+        const leftN = 9, leftD = 10;
+        const L = lcm(d,leftD);
+        const totalScaled = totalN*(L/d);
+        const leftScaled = leftN*(L/leftD);
+        const drank = totalScaled - leftScaled;
+        currentQuestionHTML = `應用題：小玲有 ${mixedHTML(totalN,d,"lg")} 公升的果汁，喝掉一些後還剩 ${fracHTML(leftN,leftD,"lg")} 公升。她喝掉幾公升？`;
+        return buildOptionsGeneric(reduceFrac(drank, L), { reduceCorrect:true, reduceDistractors:true });
+      }
+
+      if(scenario === 3){
+        const yN=7, yD=12;
+        const addWhole=1, addN=1, addD=9;
+        const addTotalN = addWhole*addD + addN;
+
+        const L = lcm(yD, addD);
+        const today = yN*(L/yD) + addTotalN*(L/addD);
+        currentQuestionHTML = `應用題：爸爸昨天跑了 ${fracHTML(yN,yD,"lg")} 公里，今天比昨天多跑 ${mixedHTML(addTotalN,addD,"lg")} 公里。爸爸今天跑了幾公里？`;
+        return buildOptionsGeneric(reduceFrac(today, L), { reduceCorrect:true, reduceDistractors:true });
+      }
+
+      const blueN=13, blueD=12, redN=5, redD=8;
+      const L = lcm(blueD, redD);
+      const diff = blueN*(L/blueD) - redN*(L/redD);
+      currentQuestionHTML = `應用題：藍色球重 ${fracHTML(blueN,blueD,"lg")} 公斤，紅色球重 ${fracHTML(redN,redD,"lg")} 公斤。紅色球比藍色球輕多少公斤？`;
+      return buildOptionsGeneric(reduceFrac(diff, L), { reduceCorrect:true, reduceDistractors:true });
+    }
+
+    function nextQuestion(){
+      clearOptionGlow();
+      setOptionsDisabled(false);
+      hideFeedback();
+
+      let optionsMap;
+      if(currentLevel === 1) optionsMap = genLevel1();
+      else if(currentLevel === 2) optionsMap = genLevel2();
+      else if(currentLevel === 3) optionsMap = genLevel3();
+      else if(currentLevel === 4) optionsMap = genLevel4();
+      else optionsMap = genLevel5();
+
+      document.getElementById("questionText").innerHTML = currentQuestionHTML;
+
+      document.getElementById("optionA").innerHTML = `A. ${fracHTML(optionsMap.A.n, optionsMap.A.d, "md")}`;
+      document.getElementById("optionB").innerHTML = `B. ${fracHTML(optionsMap.B.n, optionsMap.B.d, "md")}`;
+      document.getElementById("optionC").innerHTML = `C. ${fracHTML(optionsMap.C.n, optionsMap.C.d, "md")}`;
+    }
+
+    function startGame(difficulty){
+      currentDifficulty = difficulty;
+      isPaused = false;
+      gameTime = 60;
+      currentScore = 0;
+      comboMultiplier = 1.0;
+
+      updateStats();
+      showScreen("gameScreen");
+
+      nextQuestion();
+      startTimer();
+    }
+
+    function difficultySpeed(){
+      if(currentDifficulty === "easy") return 1200;
+      if(currentDifficulty === "hard") return 650;
+      return 900;
+    }
+
+    function checkAnswer(selected){
+      if(isPaused || gameTime <= 0) return;
+
+      setOptionsDisabled(true);
+      clearOptionGlow();
+
+      const isCorrect = (selected === correctKey);
+
+      if(isCorrect){
+        currentScore += Math.floor(100 * comboMultiplier);
+        comboMultiplier = Math.min(3.0, comboMultiplier + 0.5);
+        gameTime += 5;
+      }else{
+        comboMultiplier = 1.0;
+        gameTime = Math.max(0, gameTime - 5);
+        document.getElementById("option"+correctKey).classList.add("correct-glow");
+      }
+
+      updateStats();
+      showFeedback(isCorrect);
+
+      if(gameTime <= 0) return endGame();
+
+      setTimeout(() => {
+        if(!isPaused && gameTime > 0){
+          nextQuestion();
+        }
+      }, difficultySpeed());
+    }
+
+    function pauseGame(){
+      isPaused = true;
+      document.getElementById("pauseOverlay").style.display = "flex";
+    }
+    function resumeGame(){
+      isPaused = false;
+      document.getElementById("pauseOverlay").style.display = "none";
+    }
+
+    function restartGame(){
+      clearInterval(timerInterval);
+      if(confirm("確定要重新開始本局遊戲嗎？分數和時間將歸零。")){
+        startGame(currentDifficulty || "normal");
+      }else{
+        startTimer();
+      }
+    }
+
+    function quitGame(){
+      clearInterval(timerInterval);
+      if(confirm("確定要結束本局遊戲並返回關卡選單嗎？本局成績不會寫入排行榜。")){
+        showLevelSelect();
+      }else{
+        startTimer();
+      }
+    }
+
+    function endGame(){
+      clearInterval(timerInterval);
+      alert(`遊戲結束！${currentPlayerName}，你獲得了 ${currentScore} 分！`);
+      showLevelSelect();
+    }
+
+    function showRanking(){ showScreen("rankingScreen"); }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const backBtn = document.getElementById("backBtn");
+      if(backBtn){
+        backBtn.href = BACK_URL;
+        backBtn.innerHTML = `<i class="fa-solid fa-chevron-left"></i> 回到${BACK_GRADE}${BACK_TOPIC}`;
+      }
+      showScreen("welcomeScreen");
+    });
+  </script>
+</body>
+</html>
