@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jessie Math捷析 - 分數大挑戰</title>
+
+  <meta name="description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta property="og:title" content="Jessie Math捷析  - 分數大挑戰">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="g5-u7-1.png">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1536">
+  <meta property="og:image:alt" content="Jessie Math 遊戲封面">
+  <link rel="image_src" href="g5-u7-1.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jessie Math捷析  - 分數大挑戰">
+  <meta name="twitter:description" content="© 2025–2026 Jessie Math 捷析老師. All rights reserved.">
+  <meta name="twitter:image" content="g5-u7-1.png">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f4f4f9;
+      --card:#ffffff;
+
+      --primary:#FFD700;
+      --good:#16a34a;
+      --bad:#dc2626;
+
+      --shadow:0 10px 30px rgba(2,8,23,.08);
+      --radius:18px;
+      --safe:16px;
+
+      --pill-bg:#ffffff;
+      --pill-line:#dbe4ff;
+      --pill-ink:#1f2937;
+
+      --footer-bg:#ffffff;
+      --footer-line:#e5e7eb;
+      --footer-ink:#0f172a;
+      --footer-muted:#475569;
+      --footer-shadow:0 10px 30px rgba(2,8,23,.08);
+    }
+
+    /* 防止反藍與拖移 */
+    *{ box-sizing:border-box; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+    /* 但輸入框需要可以反藍與輸入 */
+    input, textarea { -webkit-user-select: auto; user-select: auto; }
+
+    body{
+      margin:0;
+      font-family: Arial, "Microsoft JhengHei", system-ui, sans-serif;
+      /* 第四點要求：背景圖 jessie logo.jpg，涵蓋整個畫面，左上角對齊 */
+      background: var(--bg) url('jessie logo.jpg') no-repeat left top;
+      background-size: cover;
+      background-attachment: fixed;
+      color:var(--ink);
+      overscroll-behavior: none; /* 防止下拉更新 */
+    }
+
+    /* ===================== HERO / HEADER ===================== */
+    .header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(2,8,23,.06);
+    }
+    .header-inner{
+      width: 100%;
+      padding: 14px 40px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .brand-avatar{
+      width:58px;
+      height:58px;
+      border-radius:999px;
+      border:3px solid #e88b22; /* 依據圖片的橘黃色邊框 */
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      background:transparent; /* 透明背景 */
+      flex:0 0 auto;
+    }
+    .brand-avatar img{
+      width:85%;
+      height:85%;
+      object-fit:contain;
+      background:transparent;
+    }
+    .brand-title{
+      font-weight:500; /* 調整粗細以符合圖片 */
+      font-size:26px; /* 調整字體大小 */
+      letter-spacing: .2px;
+      line-height:1;
+      color: #1e293b;
+    }
+
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 18px;
+      border-radius:999px;
+      border:1px solid #60a5fa; /* 藍色邊框 */
+      background:#ffffff;
+      color:#3b82f6; /* 藍色字體 */
+      text-decoration:none;
+      font-weight:500;
+      font-size: 15px;
+      transition: all .12s ease;
+      white-space:nowrap;
+    }
+    .pill i{ font-size:14px; opacity:.9; }
+    .pill:hover{ transform: translateY(-1px); filter: brightness(.98); }
+    
+    .pill-back{
+      border:1px solid #a78bfa; /* 紫色邊框 */
+      color:#7c3aed; /* 紫色字體 */
+      background: #f5f3ff; /* 淡紫色背景 */
+    }
+    .pill-back i{ color:#7c3aed; }
+
+    @media (max-width:820px){
+      .header-inner{ padding:12px 20px; }
+      .brand-title{ font-size:22px; }
+      .nav-right { gap: 8px; }
+      .pill { padding: 6px 12px; font-size: 14px; }
+    }
+
+    /* ===================== RWD 強制橫向 ===================== */
+    #rotateOverlay {
+      position: fixed;
+      inset: 0;
+      background: #0f172a;
+      color: white;
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+    #rotateOverlay i { font-size: 50px; margin-bottom: 20px; animation: spinPhone 2s infinite ease; }
+    @keyframes spinPhone { 0% { transform: rotate(0deg); } 100% { transform: rotate(-90deg); } }
+    
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+      #rotateOverlay { display: flex; }
+      .header, .game-container, footer { display: none !important; }
+    }
+
+    /* ===================== MAIN ===================== */
+    .game-container{
+      max-width: 860px;
+      margin: 18px auto 28px;
+      padding: var(--safe);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border:1px solid var(--line);
+      position: relative; 
+    }
+
+    .screen{ display:none; padding:18px; }
+    .screen.active{ display:block; }
+
+    .center{ text-align:center; }
+    h2{ margin:6px 0 10px; }
+    p{ margin:10px 0; line-height:1.7; }
+
+    .btn-primary{
+      background: var(--primary);
+      border:0;
+      padding:10px 18px;
+      margin:10px 6px;
+      border-radius:14px;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:900;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn-primary:hover{ transform: translateY(-1px); filter: brightness(.98); }
+
+    .input-like{
+      width:min(340px, 92%);
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+      outline:none;
+      font-size:1rem;
+    }
+    .input-like:focus{ border-color:#cbd5e1; box-shadow:0 0 0 4px rgba(95,115,255,.18); }
+
+    /* 分數顯示 */
+    .frac{
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      vertical-align:middle;
+      line-height:1;
+      font-weight:900;
+      margin: 0 .08em;
+      transform: translateY(-1px);
+    }
+    .frac .top{ font-size:.95em; padding: 0 .22em .18em; }
+    .frac .bottom{ font-size:.95em; border-top:2px solid rgba(15,23,42,.45); padding: .18em .22em 0; }
+    .frac.sm{ font-size:1em; }
+    .frac.md{ font-size:1.05em; }
+    .frac.lg{ font-size:1.1em; }
+
+    /* 填充題輸入框 (修改以融入分數上下排版) */
+    .frac input.fill-input {
+      width: 70px;
+      font-size: 1.1em;
+      padding: 2px;
+      margin: 0;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-weight: bold;
+      color: var(--ink);
+    }
+    .frac input.fill-input:focus { border-color: #7c5cff; outline: none; }
+
+    /* 遊戲區塊配置 */
+    .game-controls{
+      display:flex;
+      justify-content:space-around;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+      text-align:center;
+    }
+    .game-stat{
+      font-size:1.05rem;
+      font-weight:900;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:16px;
+      min-width:160px;
+    }
+
+    .question-box{
+      font-size:1.6rem;
+      margin:16px 0 10px;
+      padding:18px;
+      border:2px dashed #cbd5e1;
+      border-radius:16px;
+      background:#fff;
+      text-align:center;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .answer-options{ max-width:560px; margin: 0 auto; position: relative; z-index: 10;}
+    .answer-options button{
+      width:100%;
+      margin:8px 0;
+      padding:14px;
+      font-size:1.1rem;
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+      text-align:left;
+    }
+    .answer-options button:hover{ transform: translateY(-1px); filter: brightness(.99); }
+    .answer-options button:disabled{ opacity:.65; cursor:not-allowed; transform:none; }
+    .answer-options button.correct-glow{
+      border-color: rgba(22,163,74,.55);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.12);
+      background: rgba(22,163,74,.06);
+    }
+
+    .fill-actions { text-align: center; margin-top: 15px; position: relative; z-index: 10;}
+
+    /* 計算紙 */
+    #drawCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+      pointer-events: none; 
+      z-index: 20; /* 提升畫板層級，蓋過題目與選項 */
+    }
+    #drawCanvas.active {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.1);
+      cursor: crosshair;
+    }
+    .wb-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 30; /* 確保按鈕在計算紙上方 */
+    }
+    .btn-wb {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #334155;
+    }
+    .btn-wb.active { background: #e0e7ff; border-color: #818cf8; color: #3730a3; }
+
+    /* 老師啦啦隊 */
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .mascot img {
+      width: 250px; 
+      height: auto;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+    }
+    .mascot .bubble {
+      background: white;
+      border: 3px solid var(--primary);
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      position: relative;
+      color: var(--ink);
+    }
+    .mascot .bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: var(--primary) transparent transparent transparent;
+    }
+    #mascotLeft { left: -300px; }
+    #mascotLeft.show { left: 20px; opacity: 1; }
+    #mascotRight { right: -300px; }
+    #mascotRight.show { right: 20px; opacity: 1; }
+    
+    @media (max-width: 1200px) {
+      .mascot img { width: 180px; }
+      #mascotLeft.show { left: 0px; }
+      #mascotRight.show { right: 0px; }
+    }
+
+    /* 復盤表格與排行榜 */
+    table{ width:100%; border-collapse:collapse; margin-top: 15px; font-size: 0.95rem; }
+    th,td{ border-bottom:1px solid var(--line); padding:10px 8px; text-align:center; }
+    th{ background:#fffbe6; font-weight: bold; }
+    .badge { padding: 4px 8px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+    .badge.green { background: #dcfce7; color: #166534; }
+    .badge.red { background: #fee2e2; color: #991b1b; }
+    .badge.grey { background: #e2e8f0; color: #475569; }
+
+    /* FOOTER */
+    footer{ max-width: 100%; margin: 0 auto 24px; padding: 0 40px 18px; }
+    .footer-pill{
+      display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      padding: 14px 16px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
+      border: 1px solid var(--footer-line);
+      border-radius: 999px; box-shadow: var(--footer-shadow);
+    }
+    .footer-left, .footer-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .footer-dot{ width:10px; height:10px; border-radius:999px; background: var(--primary); box-shadow: 0 0 0 4px rgba(255,215,0,.18); }
+    .footer-copy, .footer-tagline{ font-weight:900; letter-spacing:.2px; }
+    .footer-copy{ color: var(--footer-ink); }
+    .footer-tagline{ color: var(--footer-muted); }
+    .footer-icon{ width:28px; height:28px; border-radius:10px; display:grid; place-items:center; background: rgba(124,92,255,.10); border: 1px solid rgba(124,92,255,.18); color:#4c2cff; }
+
+    /* 關卡選單 */
+    .level-selection-5{
+      display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:14px; margin-top:18px;
+    }
+    .level-selection-5 .level-btn:nth-child(4){ grid-column: 1 / span 2; }
+    .level-selection-5 .level-btn:nth-child(5){ grid-column: 3 / span 1; }
+    .level-btn{
+      padding:18px 12px; border:2px solid var(--primary); background:#fff; border-radius:16px;
+      font-size:1.05rem; cursor:pointer; font-weight:900; transition: transform .12s ease, background .12s ease; text-align:center;
+    }
+    .level-btn:hover{ transform: translateY(-2px); background:#fffbe6; }
+    
+    @media (max-width: 620px){
+      .level-selection-5{ grid-template-columns: 1fr; }
+      .level-selection-5 .level-btn:nth-child(4), .level-selection-5 .level-btn:nth-child(5){ grid-column:auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 手機直向防呆遮罩 -->
+  <div id="rotateOverlay">
+    <i class="fa-solid fa-mobile-screen-button"></i>
+    <h2>請將裝置轉為橫向</h2>
+    <p>為了獲得最佳的遊戲與計算體驗<br>請開啟螢幕旋轉並將手機橫放</p>
+  </div>
+
+  <!-- HERO -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand-left">
+        <div class="brand-avatar">
+          <img src="JESSIEMATH-Q.png" alt="Jessie Math" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NCIgaGVpZ2h0PSI1NCI+PGNpcmNsZSBjeD0iMjciIGN5PSIyNyIgcj0iMjciIGZpbGw9IiNGRkQ3MDAiLz48L3N2Zz4='">
+        </div>
+        <div class="brand-title">Jessie Math 捷析</div>
+      </div>
+
+      <nav class="nav-right" aria-label="top-nav">
+        <a class="pill" href="https://jessiemath0703-chu.github.io/website2/" title="首頁">
+          <i class="fa-solid fa-house"></i> 首頁
+        </a>
+        <a class="pill" href="https://jessiemath0703-chu.github.io/Game-Lobby/" title="遊戲大廳">
+          <i class="fa-solid fa-gamepad"></i> 遊戲大廳
+        </a>
+        <a id="backBtn" class="pill pill-back" href="https://jessiemath0703-chu.github.io/Game-Lobby/#g5-u7" title="G5 擴、約分與加減">
+          <i class="fa-solid fa-rotate-left"></i> G5 擴、約分與加減
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="game-container">
+    <!-- 計算紙 Canvas (疊在畫面上方) -->
+    <canvas id="drawCanvas"></canvas>
+
+    <!-- Welcome -->
+    <div id="welcomeScreen" class="screen active center">
+      <h2>分數大挑戰：探險家報到！</h2>
+      <p style="color:var(--muted); font-size:0.95rem;">名字輸入下去，你就是這個世界的主角✨</p>
+      <input type="text" id="playerName" class="input-like" placeholder="探險家名字" autocomplete="off">
+      <div style="margin-top:15px;">
+        <button class="btn-primary" type="button" onclick="showLevelSelect()">進入大廳</button>
+      </div>
+    </div>
+
+    <!-- Level Select -->
+    <div id="levelSelectScreen" class="screen">
+      <div class="center">
+        <h2>選擇你的挑戰關卡 🗺️</h2>
+        <p style="color:var(--muted); font-size:0.95rem;">五關一路闖：從擴分到綜合，把分數練到又快又穩。</p>
+      </div>
+
+      <div class="level-selection-5">
+        <button class="level-btn" type="button" onclick="showDifficultySelect(1)">第 1 關：分數擴分</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(2)">第 2 關：分數約分</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(3)">第 3 關：同分母加減</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(4)">第 4 關：異分母加減</button>
+        <button class="level-btn" type="button" onclick="showDifficultySelect(5)">第 5 關：綜合挑戰</button>
+      </div>
+
+      <div class="center" style="margin-top:20px;">
+        <button class="btn-primary" type="button" onclick="showRanking()"><i class="fa-solid fa-trophy"></i> 英雄排行榜</button>
+      </div>
+    </div>
+
+    <!-- Difficulty -->
+    <div id="difficultySelectScreen" class="screen center">
+      <h2 id="currentLevelTitle"></h2>
+      <p style="color:var(--muted); font-size:0.95rem;">選難度像選節奏：慢是優雅，快是燃 🔥</p>
+      <button class="btn-primary" type="button" onclick="startGame('easy')">簡單（較慢）</button>
+      <button class="btn-primary" type="button" onclick="startGame('normal')">普通（標準）</button>
+      <button class="btn-primary" type="button" onclick="startGame('hard')">困難（超快）</button>
+      <div style="margin-top:15px;">
+        <button class="btn-primary" type="button" onclick="showScreen('levelSelectScreen')" style="background:#cbd5e1; color:#0f172a;">返回</button>
+      </div>
+    </div>
+
+    <!-- Game -->
+    <div id="gameScreen" class="screen">
+      <div class="game-controls">
+        <span class="game-stat">⏳ <span id="timer">60</span>s</span>
+        <span class="game-stat">🏅 <span id="score">0</span> 分</span>
+        <span class="game-stat">🔥 <span id="combo">1.0</span>x</span>
+      </div>
+
+      <div class="question-box">
+        <div id="questionText">準備出題中…</div>
+      </div>
+      
+      <!-- 答題回饋與正確答案顯示區 -->
+      <div id="feedbackArea" style="display:none; text-align:center; font-size:1.3rem; font-weight:bold; margin-bottom: 15px; position:relative; z-index:10;"></div>
+
+      <!-- 選擇題區塊 -->
+      <div id="multipleChoiceArea" class="answer-options">
+        <button id="optionA" type="button" onclick="checkMultipleChoice('A')">A</button>
+        <button id="optionB" type="button" onclick="checkMultipleChoice('B')">B</button>
+        <button id="optionC" type="button" onclick="checkMultipleChoice('C')">C</button>
+      </div>
+
+      <!-- 填充題區塊 -->
+      <div id="fillInArea" class="fill-actions" style="display:none;">
+        <button class="btn-primary" type="button" onclick="checkFillAnswer()" style="padding: 14px 40px; font-size: 1.2rem;">送出答案 <i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+
+      <div class="wb-controls">
+        <button id="btnToggleWb" class="btn-wb" onclick="toggleWhiteboard()"><i class="fa-solid fa-pen"></i> 開啟計算紙</button>
+        <button class="btn-wb" onclick="clearWhiteboard()"><i class="fa-solid fa-eraser"></i> 清除</button>
+      </div>
+
+      <div class="center" style="margin-top: 20px; border-top: 1px solid var(--line); padding-top: 15px;">
+        <button class="btn-primary" type="button" style="background:#cbd5e1; color:#0f172a;" onclick="quitGame()"><i class="fa-solid fa-right-from-bracket"></i> 提前結束</button>
+      </div>
+    </div>
+
+    <!-- Result / 復盤機制 -->
+    <div id="resultScreen" class="screen">
+      <div class="center">
+        <h2>🎉 挑戰結束！成績發表 🎉</h2>
+        <div class="game-controls" style="justify-content: center; gap: 20px;">
+          <span class="game-stat" style="font-size: 1.2rem; background: #fffbe6; border-color: var(--primary);">總分：<span id="resScore">0</span></span>
+          <span class="game-stat" style="font-size: 1.2rem;">答對：<span id="resCorrect">0</span> / <span id="resTotal">0</span></span>
+        </div>
+      </div>
+      
+      <h3 style="margin-top: 20px;">📜 戰況復盤 (作答紀錄)</h3>
+      <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--line); border-radius: 12px;">
+        <table>
+          <thead>
+            <tr><th>題目</th><th>你的答案</th><th>正確答案</th><th>結果</th></tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- 動態生成 -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="center" style="margin-top:20px;">
+        <button class="btn-primary" type="button" onclick="showRanking()">查看排行榜</button>
+        <button class="btn-primary" type="button" onclick="showScreen('levelSelectScreen')" style="background:#cbd5e1; color:#0f172a;">回關卡大廳</button>
+      </div>
+    </div>
+
+    <!-- Ranking -->
+    <div id="rankingScreen" class="screen">
+      <div class="center">
+        <h2>🏆 英雄排行榜 (Top 10)</h2>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr><th>名次</th><th>玩家</th><th>關卡/難度</th><th>分數</th><th>答對率</th><th>時間</th></tr>
+          </thead>
+          <tbody id="rankingTableBody">
+            <!-- 動態生成 -->
+          </tbody>
+        </table>
+      </div>
+      <div class="center" style="margin-top:15px;">
+        <button class="btn-primary" type="button" onclick="showScreen('levelSelectScreen')">返回大廳</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-pill">
+      <div class="footer-left">
+        <div class="footer-dot" aria-hidden="true"></div>
+        <div class="footer-copy">© 2025–2026 Jessie Math 捷析老師. All rights reserved.</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-icon" aria-hidden="true"><i class="fas fa-compass"></i></div>
+        <div class="footer-tagline">數學不迷路，捷析Jessie 帶你走向理解。</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 老師啦啦隊跳窗 -->
+  <div id="mascotLeft" class="mascot">
+    <div class="bubble" id="bubbleLeft">加油！</div>
+    <img src="jessie.png" alt="Jessie老師" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMjUwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2JkNWUxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiMzMzQiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPueEoeWcluAHPC90ZXh0Pjwvc3ZnPg=='">
+  </div>
+  <div id="mascotRight" class="mascot">
+    <div class="bubble" id="bubbleRight">很棒！</div>
+    <img src="JESSIEMATH-Q.png" alt="Q版Jessie" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMjUwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2JkNWUxIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZpbGw9IiMzMzQiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPueEoeWcluAHPC90ZXh0Pjwvc3ZnPg=='">
+  </div>
+
+  <script>
+    // 更新了這裡的標題與連結
+    const BACK_GRADE = "G5 ";
+    const BACK_TOPIC  = "擴、約分與加減";
+    const BACK_URL = "https://jessiemath0703-chu.github.io/Game-Lobby/#g5-u7";
+
+    /* ========== 狀態變數 ========== */
+    let currentPlayerName = "探險家";
+    let currentLevel = 0;
+    let currentDifficulty = "";
+    let timerInterval = null;
+    let gameTime = 60;
+    let currentScore = 0;
+    let comboMultiplier = 1.0;
+    let isPaused = false;
+    let isProcessing = false; // 新增：用來鎖定作答防止連點
+    const levelNames = ["", "分數擴分", "分數約分", "同分母加減", "異分母加減", "綜合挑戰"];
+    
+    // 復盤與統計
+    let gameHistory = [];
+    let totalQuestions = 0;
+    let correctQuestions = 0;
+
+    // 當前題目資訊
+    let currentQuestionConfig = null;
+
+    /* ========== 共用函式 ========== */
+    function showScreen(screenId){
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(screenId).classList.add("active");
+    }
+
+    function showLevelSelect(){
+      const nameInput = document.getElementById("playerName").value.trim();
+      if(nameInput) currentPlayerName = nameInput;
+      showScreen("levelSelectScreen");
+    }
+
+    function showDifficultySelect(level){
+      currentLevel = level;
+      document.getElementById("currentLevelTitle").textContent = `第 ${level} 關：${levelNames[level]}`;
+      showScreen("difficultySelectScreen");
+    }
+
+    /* ========== 工具函式 ========== */
+    function randInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function gcd(a,b){ a = Math.abs(a); b = Math.abs(b); while(b){ [a,b] = [b, a%b]; } return a || 1; }
+    function lcm(a,b){ return Math.abs(a*b) / gcd(a,b); }
+    function reduceFrac(n,d){ const g = gcd(n,d); return { n: n/g, d: d/g }; }
+    function fracKey(n,d){ return `${n}/${d}`; }
+    
+    // 生成 HTML 分數
+    function fracHTML(n,d,size="md"){
+      return `<span class="frac ${size}"><span class="top">${n}</span><span class="bottom">${d}</span></span>`;
+    }
+    // 帶分數
+    function mixedHTML(n,d,size="md"){
+      const sign = n < 0 ? "-" : ""; n = Math.abs(n);
+      if(n < d) return `${sign}${fracHTML(n,d,size)}`;
+      const whole = Math.floor(n/d); const rem = n % d;
+      if(rem === 0) return `${sign}${whole}`;
+      return `${sign}<strong>${whole}</strong> 又 ${fracHTML(rem,d,size)}`;
+    }
+
+    /* ========== 題目生成邏輯 ========== */
+
+    // 產生選擇題的混淆選項
+    function buildMultipleChoice(correctObj, wrongArr) {
+      const wrongs = wrongArr.filter(f => fracKey(f.n,f.d) !== fracKey(correctObj.n,correctObj.d));
+      // 補齊到 2 個錯的
+      while(wrongs.length < 2) {
+        let nWrong = correctObj.n + randInt(1,5);
+        if(nWrong <= 0) nWrong = 1;
+        wrongs.push({ n: nWrong, d: correctObj.d + randInt(1,5) });
+      }
+      const options = [correctObj, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5);
+      const keys = ["A", "B", "C"];
+      let correctKey = "A";
+      let renderMap = {};
+      options.forEach((opt, idx) => {
+        if(fracKey(opt.n, opt.d) === fracKey(correctObj.n, correctObj.d)) correctKey = keys[idx];
+        renderMap[keys[idx]] = opt;
+      });
+
+      return {
+        isInput: false,
+        correctKey: correctKey,
+        correctAnsHtml: fracHTML(correctObj.n, correctObj.d, "sm"),
+        renderMap: renderMap
+      };
+    }
+
+    // 第一關：擴分 (不一定從最簡分數開始，只求固定分子或分母) (調整數字範圍，每局大洗牌)
+    function genLevel1(){
+      let p = randInt(1, 9); let q = randInt(2, 12);
+      while(p>=q || gcd(p,q)!==1) { p=randInt(1, 9); q=randInt(2, 12); }
+      const k = randInt(1, 4);
+      const nStart = p * k; const dStart = q * k;
+      const m = randInt(2, 8); // 擴分倍數變化增加
+      const nAns = nStart * m; const dAns = dStart * m;
+
+      if(Math.random() < 0.5) {
+        // 擴分填充題 (使用上下的分數排版格式)
+        if(Math.random() < 0.5) {
+          // 固定分母，求分子
+          return {
+            isInput: true,
+            html: `擴分填充：${fracHTML(nStart,dStart,"lg")} = <span class="frac lg"><span class="top"><input type="number" id="ansVal" class="fill-input"></span><span class="bottom"><strong>${dAns}</strong></span></span>`,
+            textForLog: `${nStart}/${dStart} = ?/${dAns}`,
+            correctAns: nAns.toString(),
+            correctAnsHtml: nAns.toString()
+          };
+        } else {
+          // 固定分子，求分母
+          return {
+            isInput: true,
+            html: `擴分填充：${fracHTML(nStart,dStart,"lg")} = <span class="frac lg"><span class="top"><strong>${nAns}</strong></span><span class="bottom"><input type="number" id="ansVal" class="fill-input"></span></span>`,
+            textForLog: `${nStart}/${dStart} = ${nAns}/?`,
+            correctAns: dAns.toString(),
+            correctAnsHtml: dAns.toString()
+          };
+        }
+      } else {
+        // 選擇題
+        const correct = { n: nAns, d: dAns };
+        return {
+          ...buildMultipleChoice(correct, [
+            {n: nStart, d: dAns}, {n: nAns+randInt(1,4), d: dAns}, {n: Math.max(1, nAns-randInt(1,3)), d: dAns}
+          ]),
+          html: `把 ${fracHTML(nStart,dStart,"lg")} 擴分成分母是 <strong>${dAns}</strong> 的分數是？`,
+          textForLog: `${nStart}/${dStart} -> 分母${dAns}`
+        };
+      }
+    }
+
+    // 第二關：約分 (不一定約到最簡分數，只求固定分子或分母) (調整數字範圍，每局大洗牌)
+    function genLevel2(){
+      let p = randInt(1, 9); let q = randInt(2, 12);
+      while(p>=q || gcd(p,q)!==1) { p=randInt(1, 9); q=randInt(2, 12); }
+      const k = randInt(1, 4);
+      const nAns = p * k; const dAns = q * k; // 目標分數 (不一定是約到最簡)
+      const m = randInt(2, 8);
+      const nStart = nAns * m; const dStart = dAns * m; // 原始分數
+
+      if(Math.random() < 0.5) {
+        // 約分填充題 (使用上下的分數排版格式)
+        if(Math.random() < 0.5) {
+          // 固定分母，求分子
+          return {
+            isInput: true,
+            html: `約分填充：${fracHTML(nStart,dStart,"lg")} = <span class="frac lg"><span class="top"><input type="number" id="ansVal" class="fill-input"></span><span class="bottom"><strong>${dAns}</strong></span></span>`,
+            textForLog: `${nStart}/${dStart} = ?/${dAns}`,
+            correctAns: nAns.toString(),
+            correctAnsHtml: nAns.toString()
+          };
+        } else {
+          // 固定分子，求分母
+          return {
+            isInput: true,
+            html: `約分填充：${fracHTML(nStart,dStart,"lg")} = <span class="frac lg"><span class="top"><strong>${nAns}</strong></span><span class="bottom"><input type="number" id="ansVal" class="fill-input"></span></span>`,
+            textForLog: `${nStart}/${dStart} = ${nAns}/?`,
+            correctAns: dAns.toString(),
+            correctAnsHtml: dAns.toString()
+          };
+        }
+      } else {
+        // 選擇題
+        const correct = { n: nAns, d: dAns };
+        return {
+          ...buildMultipleChoice(correct, [
+            {n: nStart, d: dAns}, {n: nAns+randInt(1,4), d: dAns}, {n: Math.max(1, nAns-randInt(1,3)), d: dAns}
+          ]),
+          html: `把 ${fracHTML(nStart,dStart,"lg")} 約分成分母是 <strong>${dAns}</strong> 的分數是？`,
+          textForLog: `${nStart}/${dStart} -> 分母${dAns}`
+        };
+      }
+    }
+
+    // 第三關：同分母加減 (數字變動更大)
+    function genLevel3(){
+      const d = randInt(4, 25); let a = randInt(1, d-1); let b = randInt(1, d-1);
+      const isAdd = Math.random() < 0.5;
+      let n;
+      let symbol = "+";
+      if(isAdd){ n = a + b; } else { if(a < b) [a,b] = [b,a]; n = a - b; symbol = "−"; }
+      const reduced = reduceFrac(n,d);
+
+      return {
+        ...buildMultipleChoice(reduced, [ {n:n, d:d+d}, {n:n+1, d:d}, {n:Math.max(1, n-1), d:d} ]),
+        html: `同分母計算：${fracHTML(a,d,"lg")} ${symbol} ${fracHTML(b,d,"lg")} = ? <br><span style="font-size:1rem; color:var(--muted);">請化為最簡分數</span>`,
+        textForLog: `${a}/${d} ${symbol} ${b}/${d}`
+      };
+    }
+
+    // 第四關：異分母加減 (數字變動更大)
+    function genLevel4(){
+      let d1 = randInt(3, 12); let d2 = randInt(3, 12); while(d2===d1) d2=randInt(3, 12);
+      let n1 = randInt(1, d1-1); let n2 = randInt(1, d2-1);
+      const L = lcm(d1,d2);
+      const v1 = n1*(L/d1); const v2 = n2*(L/d2);
+      const isAdd = Math.random() < 0.6;
+      
+      let html, textForLog, correct;
+      if(isAdd) {
+        correct = reduceFrac(v1+v2, L);
+        html = `異分母計算：${fracHTML(n1,d1,"lg")} + ${fracHTML(n2,d2,"lg")} = ?`;
+        textForLog = `${n1}/${d1} + ${n2}/${d2}`;
+      } else {
+        if(v1 < v2) { [n1,n2]=[n2,n1]; [d1,d2]=[d2,d1]; }
+        correct = reduceFrac(Math.abs(v1-v2), L);
+        html = `異分母計算：${fracHTML(n1,d1,"lg")} − ${fracHTML(n2,d2,"lg")} = ?`;
+        textForLog = `${n1}/${d1} - ${n2}/${d2}`;
+      }
+      
+      return {
+        ...buildMultipleChoice(correct, [ {n: correct.n+1, d: correct.d}, {n: correct.n, d: correct.d+1} ]),
+        html: html, textForLog: textForLog
+      };
+    }
+
+    function genLevel5(){
+      const roll = randInt(1,4);
+      if(roll===1) return genLevel1();
+      if(roll===2) return genLevel2();
+      if(roll===3) return genLevel3();
+      return genLevel4();
+    }
+
+    /* ========== 遊戲流程 ========== */
+    function updateStats(){
+      document.getElementById("timer").textContent = gameTime;
+      document.getElementById("score").textContent = currentScore;
+      document.getElementById("combo").textContent = comboMultiplier.toFixed(1);
+    }
+
+    function startTimer(){
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if(isPaused) return;
+        gameTime--;
+        if(gameTime <= 0) { gameTime = 0; endGame(); }
+        updateStats();
+      }, 1000);
+    }
+
+    function startGame(difficulty){
+      currentDifficulty = difficulty;
+      isPaused = false; 
+      isProcessing = false; // 重置鎖定
+      gameTime = 60; currentScore = 0; comboMultiplier = 1.0;
+      gameHistory = []; totalQuestions = 0; correctQuestions = 0;
+      
+      updateStats();
+      showScreen("gameScreen");
+      nextQuestion();
+      startTimer();
+    }
+
+    function nextQuestion(){
+      totalQuestions++;
+      isProcessing = false; // 解除鎖定
+      
+      // UI 重置
+      document.getElementById("multipleChoiceArea").style.display = "none";
+      document.getElementById("fillInArea").style.display = "none";
+      document.getElementById("feedbackArea").style.display = "none"; // 隱藏回饋區
+      ["A","B","C"].forEach(k => document.getElementById("option"+k).classList.remove("correct-glow"));
+      
+      if(currentLevel === 1) currentQuestionConfig = genLevel1();
+      else if(currentLevel === 2) currentQuestionConfig = genLevel2();
+      else if(currentLevel === 3) currentQuestionConfig = genLevel3();
+      else if(currentLevel === 4) currentQuestionConfig = genLevel4();
+      else currentQuestionConfig = genLevel5();
+
+      document.getElementById("questionText").innerHTML = currentQuestionConfig.html;
+
+      if(currentQuestionConfig.isInput) {
+        document.getElementById("fillInArea").style.display = "block";
+        // 自動 Focus
+        setTimeout(() => {
+          const inp = document.querySelector('.fill-input');
+          if(inp && window.innerWidth > 768) inp.focus();
+        }, 50);
+      } else {
+        document.getElementById("multipleChoiceArea").style.display = "block";
+        document.getElementById("optionA").innerHTML = `A. ${fracHTML(currentQuestionConfig.renderMap.A.n, currentQuestionConfig.renderMap.A.d, "md")}`;
+        document.getElementById("optionB").innerHTML = `B. ${fracHTML(currentQuestionConfig.renderMap.B.n, currentQuestionConfig.renderMap.B.d, "md")}`;
+        document.getElementById("optionC").innerHTML = `C. ${fracHTML(currentQuestionConfig.renderMap.C.n, currentQuestionConfig.renderMap.C.d, "md")}`;
+      }
+    }
+
+    function processAnswer(isCorrect, userAnswerStr, correctAnsStr) {
+      let fbDiv = document.getElementById("feedbackArea");
+
+      if(isCorrect){
+        correctQuestions++;
+        currentScore += Math.floor(100 * comboMultiplier);
+        comboMultiplier = Math.min(3.0, comboMultiplier + 0.5);
+        gameTime += 5;
+        triggerMascot(true);
+        // 答對回饋
+        fbDiv.innerHTML = `<span style="color: var(--good); background: #dcfce7; padding: 5px 15px; border-radius: 10px;">🎉 答對了！太棒了！</span>`;
+      } else {
+        comboMultiplier = 1.0;
+        gameTime = Math.max(0, gameTime - 5);
+        triggerMascot(false);
+        // 答錯顯示正確答案
+        fbDiv.innerHTML = `<span style="color: var(--bad); background: #fee2e2; padding: 5px 15px; border-radius: 10px;">❌ 答錯了！正確答案是：${correctAnsStr}</span>`;
+      }
+
+      fbDiv.style.display = "block"; // 顯示回饋
+
+      // 紀錄復盤
+      gameHistory.push({
+        q: currentQuestionConfig.textForLog,
+        user: userAnswerStr,
+        correct: correctAnsStr,
+        isCorrect: isCorrect
+      });
+
+      updateStats();
+      if(gameTime <= 0) return endGame();
+
+      // 增加延遲讓玩家可以看清楚回饋與正確答案：答對延遲 1 秒，答錯延遲 2.5 秒
+      let delay = isCorrect ? 1000 : 2500;
+      setTimeout(() => { if(gameTime > 0) nextQuestion(); }, delay);
+    }
+
+    function checkMultipleChoice(selectedKey){
+      if(isPaused || gameTime <= 0 || isProcessing) return;
+      isProcessing = true; // 鎖定作答
+      const isCorrect = (selectedKey === currentQuestionConfig.correctKey);
+      
+      if(!isCorrect) document.getElementById("option"+currentQuestionConfig.correctKey).classList.add("correct-glow");
+      
+      const uAnsHtml = fracHTML(currentQuestionConfig.renderMap[selectedKey].n, currentQuestionConfig.renderMap[selectedKey].d, "sm");
+      processAnswer(isCorrect, uAnsHtml, currentQuestionConfig.correctAnsHtml);
+    }
+
+    function checkFillAnswer(){
+      if(isPaused || gameTime <= 0 || isProcessing) return;
+      
+      let isCorrect = false;
+      let userStr = "";
+      
+      const uval = document.getElementById("ansVal").value.trim();
+      if(uval==="") return alert("請輸入答案！");
+
+      isProcessing = true; // 鎖定作答
+      userStr = uval;
+      isCorrect = (uval === currentQuestionConfig.correctAns);
+
+      processAnswer(isCorrect, userStr, currentQuestionConfig.correctAnsHtml);
+    }
+
+    // 支援 Enter 鍵提交填充題
+    document.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && document.getElementById("fillInArea").style.display === "block" && !isProcessing) {
+        checkFillAnswer();
+      }
+    });
+
+    /* ========== 老師啦啦隊 ========== */
+    const cheers = ["太棒了！", "繼續保持！", "你真聰明！", "完美答對！", "速度很快喔！"];
+    const comforts = ["沒關係，再試一次！", "差一點點！", "加油，你可以的！", "仔細想想哦！", "不要氣餒！"];
+    
+    function triggerMascot(isCorrect) {
+      const isLeft = Math.random() < 0.5;
+      const el = document.getElementById(isLeft ? "mascotLeft" : "mascotRight");
+      const bubble = document.getElementById(isLeft ? "bubbleLeft" : "bubbleRight");
+      
+      const pool = isCorrect ? cheers : comforts;
+      bubble.textContent = pool[Math.floor(Math.random() * pool.length)];
+      
+      el.classList.add("show");
+      setTimeout(() => { el.classList.remove("show"); }, 2500);
+    }
+
+    /* ========== 復盤與結束 ========== */
+    function quitGame(){
+      clearInterval(timerInterval);
+      if(confirm("確定要提前結束嗎？")) endGame();
+      else startTimer();
+    }
+
+    function endGame(){
+      clearInterval(timerInterval);
+      
+      // 處理時間到「未答題」的問題
+      if(currentQuestionConfig && gameHistory.length < totalQuestions) {
+        gameHistory.push({
+          q: currentQuestionConfig.textForLog,
+          user: "未答題",
+          correct: currentQuestionConfig.correctAnsHtml,
+          isCorrect: false
+        });
+      }
+
+      // 儲存排行榜
+      saveRanking();
+
+      // 渲染復盤表格
+      document.getElementById("resScore").textContent = currentScore;
+      document.getElementById("resCorrect").textContent = correctQuestions;
+      document.getElementById("resTotal").textContent = totalQuestions;
+      
+      const tbody = document.getElementById("historyTableBody");
+      tbody.innerHTML = "";
+      gameHistory.forEach((h, i) => {
+        const tr = document.createElement("tr");
+        let statusBadge = "";
+        if (h.isCorrect) {
+          statusBadge = `<span class="badge green">答對</span>`;
+        } else if (h.user === "未答題") {
+          statusBadge = `<span class="badge grey">未答</span>`;
+        } else {
+          statusBadge = `<span class="badge red">答錯</span>`;
+        }
+
+        tr.innerHTML = `<td>${i+1}. ${h.q}</td><td style="${h.user === '未答題' ? 'color:var(--muted);' : ''}">${h.user}</td><td>${h.correct}</td><td>${statusBadge}</td>`;
+        tbody.appendChild(tr);
+      });
+
+      showScreen("resultScreen");
+    }
+
+    function saveRanking() {
+      if(totalQuestions === 0) return;
+      let lb = JSON.parse(localStorage.getItem("jessie_math_lb") || "[]");
+      const now = new Date();
+      lb.push({
+        name: currentPlayerName,
+        level: levelNames[currentLevel],
+        diff: currentDifficulty === "hard" ? "困難" : (currentDifficulty === "easy" ? "簡單" : "普通"),
+        score: currentScore,
+        correctRate: `${correctQuestions}/${totalQuestions}`,
+        date: `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`
+      });
+      // 排序: 總分降冪 -> 答對題數降冪
+      lb.sort((a,b) => b.score - a.score);
+      lb = lb.slice(0, 10); // 取前十
+      localStorage.setItem("jessie_math_lb", JSON.stringify(lb));
+    }
+
+    function showRanking(){
+      const lb = JSON.parse(localStorage.getItem("jessie_math_lb") || "[]");
+      const tbody = document.getElementById("rankingTableBody");
+      tbody.innerHTML = "";
+      if(lb.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="padding:20px;">目前尚無紀錄，快來成為第一位英雄！</td></tr>`;
+      } else {
+        lb.forEach((r, i) => {
+          let rankIcon = i === 0 ? "🥇" : (i === 1 ? "🥈" : (i === 2 ? "🥉" : "🎖️"));
+          tbody.innerHTML += `<tr>
+            <td><span style="font-size:1.2rem;">${rankIcon}</span> ${i+1}</td>
+            <td style="font-weight:bold;">${r.name}</td>
+            <td>${r.level} (${r.diff})</td>
+            <td style="color:var(--primary); font-weight:bold;">${r.score}</td>
+            <td>${r.correctRate}</td>
+            <td style="color:var(--muted); font-size:0.85rem;">${r.date}</td>
+          </tr>`;
+        });
+      }
+      showScreen("rankingScreen");
+    }
+
+    /* ========== 計算紙 Canvas 功能 ========== */
+    const canvas = document.getElementById('drawCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let canvasActive = false;
+
+    function resizeCanvas() {
+      const container = document.querySelector('.game-container');
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function toggleWhiteboard() {
+      canvasActive = !canvasActive;
+      const btn = document.getElementById("btnToggleWb");
+      if(canvasActive) {
+        resizeCanvas(); // 確保大小正確
+        canvas.classList.add("active");
+        btn.classList.add("active");
+        btn.innerHTML = `<i class="fa-solid fa-pen-slash"></i> 關閉計算紙`;
+      } else {
+        canvas.classList.remove("active");
+        btn.classList.remove("active");
+        btn.innerHTML = `<i class="fa-solid fa-pen"></i> 開啟計算紙`;
+      }
+    }
+
+    function clearWhiteboard() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function startDraw(e) {
+      if(!canvasActive) return;
+      e.preventDefault(); 
+      isDrawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#3b82f6'; 
+      ctx.lineWidth = 3;
+    }
+
+    function draw(e) {
+      if(!isDrawing || !canvasActive) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function endDraw(e) {
+      if(!isDrawing) return;
+      e.preventDefault();
+      isDrawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', endDraw);
+
+    // 初始設定
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("backBtn").href = BACK_URL;
+      document.getElementById("backBtn").innerHTML = `<i class="fa-solid fa-rotate-left"></i> ${BACK_GRADE}${BACK_TOPIC}`;
+      showScreen("welcomeScreen");
+      resizeCanvas();
+    });
+
+  </script>
+</body>
+</html>
